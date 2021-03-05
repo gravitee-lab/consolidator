@@ -1,0 +1,7 @@
+node_modules
+dist
+tmp
+list.of.zip.files
+filtered.list.of.*
+tests-bucket-content-home
+test-script.sh
