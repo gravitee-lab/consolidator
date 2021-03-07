@@ -42,7 +42,7 @@ export interface Preparator {
 EOF
 
 echo ""
-echo "Generating the [${DOCKER_BUILD_CONTEXT}/src/modules/Consolidator.ts] "
+echo "Generating the [\${DOCKER_BUILD_CONTEXT}/src/modules/Consolidator.ts] "
 echo ""
 cat << EOF > ${DOCKER_BUILD_CONTEXT}/src/modules/Consolidator.ts
 import { Preparator } from './Preparator'
@@ -76,9 +76,9 @@ export class Consolidator implements Preparator{
         if (\`\${process.env.BUCKET_CONTENT_HOME}\` === \`\` || process.env.BUCKET_CONTENT_HOME === undefined) {
           throw new Error(\`The BUCKET_CONTENT_HOME environment variable is not set, but is required.\`);
         }
-        console.log(\`# --------------------------------------- {[Consolidator]} --------------------------------------- # \`);
-        console.log(\`# ------------------------------------------------------------------------------------------------ # \`);
-        console.log(\`#                                                                                                  # \`);
+        console.log(\`# --------------------------------------- {[Consolidator]} --------------------------------------- # \`);
+        console.log(\`# ------------------------------------------------------------------------------------------------ # \`);
+        console.log(\`#                                                                                                  # \`);
         console.log(\`running: [\${this.name}]\`);
         console.log(\`with OPS_HOME: [\${this.opsHome}]\`);
         console.log(\`with PREPS_HOME: [\${process.env.PREPS_HOME}]\`);
@@ -86,9 +86,9 @@ export class Consolidator implements Preparator{
         console.log(\`with BUCKET_CONTENT_HOME: [\${process.env.BUCKET_CONTENT_HOME}]\`);
         console.log(\`with provided argument:\`);
         console.log(arg);
-        console.log(\`#                                                                                                  # \`);
-        console.log(\`# ------------------------------------------------------------------------------------------------ # \`);
-        console.log(\`# --------------------------------------- {[Consolidator]} --------------------------------------- # \`);
+        console.log(\`#                                                                                                  # \`);
+        console.log(\`# ------------------------------------------------------------------------------------------------ # \`);
+        console.log(\`# --------------------------------------- {[Consolidator]} --------------------------------------- # \`);
         // process.env.PREPS_HOME
         // process.env.GIO_RELEASE_VERSION
 
@@ -239,13 +239,12 @@ export class Consolidator implements Preparator{
             throw new Error(\`{[Consolidator]} - [processByFilters(): void] - An error occured while executing [cd \${zipFileDir} && sha512sum \${zipFileName} > \${zipFileName}.sha512sum && md5sum \${zipFileName} > \${zipFileName}.md5 && cd \${gioOpsHome}]\`)
           }
           /*
-          console.log(\`\`);
-
           let executeChecksummer = shelljs.exec(\`docker run --name checksummer -i --rm -v \$PWD:/root/ debian:buster-slim bash -c "cd /root && cd \${incontainerFullpath} && sha512sum \${zipFileName} > \${zipFileName}.sha512sum && md5sum \${zipFileName} > \${zipFileName}.md5" || true\`);
           if (executeChecksummer.code !== 0) {
             throw new Error(\`{[Consolidator]} - [processByFilters(): void] - An error occured while executing [docker run --name checksummer -i --rm -v \$PWD:/root/ debian:buster-slim bash -c "cd /root && cd \${incontainerFullpath} && sha512sum \${zipFileName} > \${zipFileName}.sha512sum && md5sum \${zipFileName} > \${zipFileName}.md5" || true]\`)
           }
           */
+
           let destinationFolder: string =\`graviteeio-apim/plugins/\${gioBundlesTypes}/\${zipFilenameNoextNover}\`
           // mkdir -p \${BUCKET_CONTENT_HOME}/bucket-content/\${DESTINATION_FOLDER}
           let createDestinationFolder = shelljs.exec(\`mkdir -p \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}\`);
@@ -274,6 +273,8 @@ export class Consolidator implements Preparator{
         console.log(\`finished processing [\${filterFilePath}]\`);
         console.log(\`\`);
       }
+
+
     }
 }
 EOF
