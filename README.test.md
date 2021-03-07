@@ -48,7 +48,7 @@ docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_REL
 # -- #
 
 docker exec -it gio_consolidator bash -c "pwd && ls -allh ."
-docker exec -it gio_consolidator bash -c "npm i && tsc && npm start"
+docker exec -it gio_consolidator bash -c "tsc && npm start"
 
 
 echo "# ------------------------------------------------------------ #"
