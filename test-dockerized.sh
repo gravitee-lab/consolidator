@@ -284,9 +284,10 @@ FROM node:12.21.0-buster
 
 RUN apt-get update -y && apt-get install -y tree curl
 
-ARG PREPS_HOME=/home/node/app/python-tmp
+# ARG PREPS_HOME=/home/node/app/python-tmp
+ARG PREPS_HOME=/home/node/app/tmp
 ARG GIO_RELEASE_VERSION
-ARG BUCKET_CONTENT_HOME=/home/node/app/bch
+ARG BUCKET_CONTENT_HOME=/home/node/app/tests-bucket-content-home
 
 ENV PREPS_HOME=\${PREPS_HOME}
 ENV GIO_RELEASE_VERSION=\${GIO_RELEASE_VERSION}
@@ -301,16 +302,16 @@ COPY ./src/index.ts /home/node/app/src/
 COPY ./src/modules/Preparator.ts /home/node/app/src/modules/
 COPY ./src/modules/Consolidator.ts /home/node/app/src/modules/
 COPY ./startapp.sh /home/node/app/
-
+RUN npm i -g typescript && npm i
 RUN ls -allh /home/node/app/
 RUN tree /home/node/app/src
 
-# VOLUME /home/node/app
-RUN mkdir -p ${PREPS_HOME}
-RUN mkdir -p ${BUCKET_CONTENT_HOME}
+WORKDIR /home/node/app
+# RUN mkdir -p ${PREPS_HOME}
+# RUN mkdir -p ${BUCKET_CONTENT_HOME}
 
 # copy entire folder
-COPY ./python-tmp/ ${PREPS_HOME}/
+# COPY ./python-tmp/ ${PREPS_HOME}/
 # COPY ./bch/ ${BUCKET_CONTENT_HOME}/
 
 RUN sha512sum --version
@@ -347,10 +348,10 @@ export GIO_RELEASE_VERSION=${GIO_RELEASE_VERSION:-"1.25.27"}
 # The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
 export BUCKET_CONTENT_HOME=${BUCKET_CONTENT_HOME:-$(pwd)/tests-bucket-content-home}
 
-mkdir ${DOCKER_BUILD_CONTEXT}/python-tmp/
+# mkdir ${DOCKER_BUILD_CONTEXT}/python-tmp/
 
-echo "Copying PREPS_HOME content into Docker build context"
+# echo "Copying PREPS_HOME content into Docker build context"
 
-cp -fR ${PREPS_HOME}/* ${DOCKER_BUILD_CONTEXT}/python-tmp/
+# cp -fR ${PREPS_HOME}/* ${DOCKER_BUILD_CONTEXT}/python-tmp/
 
 docker build -f ${DOCKER_BUILD_CONTEXT}/Dockerfile -t gio-devops/consolidator:0.0.1 ${DOCKER_BUILD_CONTEXT}/
