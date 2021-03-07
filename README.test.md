@@ -4,7 +4,7 @@
 export WHERE_I_WORK=~/iwarehouse
 export THIS_RECIPE_VERSION="feature/minimization"
 mkdir -p ${WHERE_I_WORK}
-git clone git@github.com:gravitee-lab/consolidator.git ${vWHERE_I_WORK}
+git clone git@github.com:gravitee-lab/consolidator.git ${WHERE_I_WORK}
 cd ${WHERE_I_WORK}
 git checkout ${THIS_RECIPE_VERSION}
 
