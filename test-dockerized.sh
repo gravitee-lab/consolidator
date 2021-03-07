@@ -270,7 +270,7 @@ export class Consolidator implements Preparator{
             throw new Error(\`{[Consolidator]} - [processByFilters(): void] - An error occured while executing [cp -f \${zipFilePath} \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}/]\`)
           }
           console.log(\`\`);
-          throw new Error("DEBUG STOP POINT JBL");
+          // throw new Error("DEBUG STOP POINT JBL");
         });
         console.log(\`finished processing [\${filterFilePath}]\`);
         console.log(\`\`);
