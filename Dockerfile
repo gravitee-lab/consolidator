@@ -15,7 +15,7 @@ RUN mkdir -p /tpm/app-gen/
 COPY . /home/node/app/
 RUN echo "checking all source code is in [/home/node/app/] : "
 RUN ls -allh /home/node/app/
-RUN npm i -g typescript && npm i
+RUN cd /home/node/app/ && npm i -g typescript && npm i
 RUN ls -allh /home/node/app/
 RUN tree /home/node/app/src
 
