@@ -1,68 +1,16 @@
-# How to test the dockerized version
+#!/bin/bash
 
-```bash
-export OPS_HOME=$(pwd)
+if [ "x${PREPS_HOME}" == "x" ]; then
+  echo "PREPS_HOME is not set, but must be."
+fi;
 
+if [ "x${GIO_RELEASE_VERSION}" == "x" ]; then
+  echo "GIO_RELEASE_VERSION is not set, but must be."
+fi;
 
-# The absolute path to the folder where the Python Script put all the built zip files.
-export PREPS_HOME=$(pwd)/tmp
-#  the Gravitee release version
-export GIO_RELEASE_VERSION="1.25.27"
-# The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
-export BUCKET_CONTENT_HOME=$(pwd)/tests-bucket-content-home
-
-
-# -- #
-# -- # Build the container image, and setup test data
-# -- #
-docker pull node:12.21.0-buster
-
-export THIS_RECIPE_VERSION="0.0.1"
-export THIS_RECIPE_VERSION="feature/delivery2"
-
-./test-dockerized.sh
-
-
-# -- #
-# -- # Then start the container
-# -- #
-
-docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_RELEASE_VERSION" -v ${PREPS_HOME}:/home/node/app/tmp -v ${BUCKET_CONTENT_HOME}:/home/node/app/tests-bucket-content-home -w /home/node/app gio-devops/consolidator:0.0.1 bash
-
-# -- #
-# -- # Finally execute the consolidator
-# -- #
-
-docker exec -it gio_consolidator bash -c "pwd && ls -allh ."
-docker exec -it gio_consolidator bash -c "tsc && npm start"
-
-
-echo "# ------------------------------------------------------------ #"
-echo "Contenu de [BUCKET_CONTENT_HOME] Avant recup : "
-echo "# ------------------------------------------------------------ #"
-find ${BUCKET_CONTENT_HOME}/ -name *.zip
-echo "# ------------------------------------------------------------ #"
-cp -fR ${RETRIEVED_BCH}/bch/* ${BUCKET_CONTENT_HOME}/
-
-echo "# ------------------------------------------------------------ #"
-echo "Contenu de [BUCKET_CONTENT_HOME] Après recup : "
-echo "# ------------------------------------------------------------ #"
-find ${BUCKET_CONTENT_HOME}/ -name *.zip
-echo "# ------------------------------------------------------------ #"
-# --
-
-```
-
-* test data set :
-
-```bash
-# The absolute path to the folder where the Python Script put all the built zip files.
-export PREPS_HOME=$(pwd)/tmp
-#  the Gravitee release version
-export GIO_RELEASE_VERSION="1.25.27"
-# The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
-export BUCKET_CONTENT_HOME=$(pwd)/tests-bucket-content-home
-
+if [ "x${BUCKET_CONTENT_HOME}" == "x" ]; then
+  echo "BUCKET_CONTENT_HOME is not set, but must be."
+fi;
 
 mkdir -p ${BUCKET_CONTENT_HOME}
 
@@ -129,5 +77,3 @@ touch ${PREPS_HOME}/${GIO_RELEASE_VERSION}/policies/gravitee-policy-jwt-1.13.1.z
 touch ${PREPS_HOME}/${GIO_RELEASE_VERSION}/policies/gravitee-policy-rest-to-soap-1.4.1.zip
 touch ${PREPS_HOME}/${GIO_RELEASE_VERSION}/policies/gravitee-policy-resource-filtering-1.5.1.zip
 touch ${PREPS_HOME}/${GIO_RELEASE_VERSION}/policies/gravitee-policy-apikey-1.8.0.zip
-
-```

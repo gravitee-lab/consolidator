@@ -6,6 +6,10 @@ if [ "x${OPS_HOME}" == "x" ]; then
   echo "OPS_HOME is not set, but must be."
 fi;
 
+
+
+
+
 # cd ephemeral
 export DOCKER_BUILD_CONTEXT=$(mktemp -d -t "DOCKER_BUILD_CONTEXT-XXXXXXXXXX")
 
@@ -21,12 +25,6 @@ cd ${OPS_HOME}
 
 # docker pull node:12.21.0-buster
 
-# The absolute path to the folder where the Python Script put all the built zip files.
-export PREPS_HOME=${PREPS_HOME:-$(pwd)/tmp}
-#  the Gravitee release version
-export GIO_RELEASE_VERSION=${GIO_RELEASE_VERSION:-"1.25.27"}
-# The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
-export BUCKET_CONTENT_HOME=${BUCKET_CONTENT_HOME:-$(pwd)/tests-bucket-content-home}
 
 # mkdir ${DOCKER_BUILD_CONTEXT}/python-tmp/
 
@@ -35,3 +33,19 @@ export BUCKET_CONTENT_HOME=${BUCKET_CONTENT_HOME:-$(pwd)/tests-bucket-content-ho
 # cp -fR ${PREPS_HOME}/* ${DOCKER_BUILD_CONTEXT}/python-tmp/
 
 docker build -f ${DOCKER_BUILD_CONTEXT}/Dockerfile -t gio-devops/consolidator:0.0.1 ${DOCKER_BUILD_CONTEXT}/
+
+
+
+if [ "x${PREPS_HOME}" == "x" ]; then
+  echo "PREPS_HOME is not set, but must be."
+fi;
+
+if [ "x${GIO_RELEASE_VERSION}" == "x" ]; then
+  echo "GIO_RELEASE_VERSION is not set, but must be."
+fi;
+
+if [ "x${BUCKET_CONTENT_HOME}" == "x" ]; then
+  echo "BUCKET_CONTENT_HOME is not set, but must be."
+fi;
+
+./setup-test-data.sh
