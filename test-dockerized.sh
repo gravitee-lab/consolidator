@@ -198,6 +198,7 @@ export class Consolidator implements Preparator{
         console.log(\`\`);
         console.log(\`start processing [\${filterFilePath}]\`);
         let gioBundlesTypes: string = \`\${this.gioBundlesTypes[k]}\`;
+        let gioOpsHome: string = \`\${this.opsHome}\`;
 
         fs.readFileSync(\`\${filterFilePath}\`).toString().split("\n").forEach(function(line, index, arr) {
           if (index === arr.length - 1 && line === "") { return; }
