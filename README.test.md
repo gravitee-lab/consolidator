@@ -6,6 +6,7 @@
 # docker run -u root -itd --name gio_consolidator -w /home/node/app gio-devops/consolidator:0.0.1
 docker run -u root -itd --name gio_consolidator -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1
 
+
 export RETRIEVED_BCH=$(mktemp -d -t "whatever-XXXXXXXXXX")
 
 docker cp gio_consolidator:/home/node/app/bch ${RETRIEVED_BCH}
