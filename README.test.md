@@ -23,9 +23,14 @@ export BUCKET_CONTENT_HOME=$(pwd)/tests-bucket-content-home
 ./setup-test-data.sh
 
 # -- #
-# -- # Then build the container
+# -- # Then build the container image
 # -- #
 
+./test-dockerized.sh
+
+# -- #
+# -- # Then start the container
+# -- #
 
 # docker run -u root -itd --name gio_pr_spawner -w /home/node/app gio-devops/consolidator:0.0.1 sh
 # docker run -u root -itd --name gio_consolidator -w /home/node/app gio-devops/consolidator:0.0.1
