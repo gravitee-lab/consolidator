@@ -1,16 +1,21 @@
 #!/bin/bash
 
-export OPS_HOME=$(pwd)
+
+
+if [ "x${OPS_HOME}" == "x" ]; then
+  echo "OPS_HOME is not set, but must be."
+fi;
+
 # cd ephemeral
 export DOCKER_BUILD_CONTEXT=$(mktemp -d -t "DOCKER_BUILD_CONTEXT-XXXXXXXXXX")
 
 # export WHERE_I_WORK=~/iwarehouse
-export THIS_RECIPE_VERSION="feature/minimization"
-mkdir -p ${WHERE_I_WORK}
+export THIS_RECIPE_VERSION=${THIS_RECIPE_VERSION:-"feature/delivery2"}
 git clone git@github.com:gravitee-lab/consolidator.git ${DOCKER_BUILD_CONTEXT}
 cd ${DOCKER_BUILD_CONTEXT}
 git checkout ${THIS_RECIPE_VERSION}
 
+cd ${OPS_HOME}
 
 # ----- put the Source code into the docker build context
 
