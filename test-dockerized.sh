@@ -298,6 +298,7 @@ RUN mkdir -p /tpm/app-gen/
 RUN cd /tpm/app-gen && npx express-generator-typescript ephemeral  && cd ephemeral && npm i --save yargs @types/yargs shelljs @types/shelljs dotenv
 RUN mkdir -p /home/node/app && cp -fR /tpm/app-gen/ephemeral/* /home/node/app/
 RUN ls -allh /home/node/app/
+RUN rm -fr /home/node/app/spec
 RUN rm -fr /home/node/app/src && mkdir -p /home/node/app/src/modules/
 COPY ./src/index.ts /home/node/app/src/
 COPY ./src/modules/Preparator.ts /home/node/app/src/modules/
