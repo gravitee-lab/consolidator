@@ -25,17 +25,18 @@ export BUCKET_CONTENT_HOME=$(pwd)/tests-bucket-content-home
 # -- #
 # -- # Then build the container image
 # -- #
-
+docker pull node:12.21.0-buster
 ./test-dockerized.sh
 
 # -- #
 # -- # Then start the container
 # -- #
 
-# docker run -u root -itd --name gio_pr_spawner -w /home/node/app gio-devops/consolidator:0.0.1 sh
-# docker run -u root -itd --name gio_consolidator -w /home/node/app gio-devops/consolidator:0.0.1
-# docker run -u root -itd --name gio_consolidator -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1
-docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_RELEASE_VERSION" -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1 bash
+# ARG PREPS_HOME=/home/node/app/tmp
+# ARG GIO_RELEASE_VERSION
+# ARG BUCKET_CONTENT_HOME=/home/node/app/tests-bucket-content-home
+# docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_RELEASE_VERSION" -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1 bash
+docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_RELEASE_VERSION" -v ${PREPS_HOME}:/home/node/app/tmp -v ${BUCKET_CONTENT_HOME}:/home/node/app/tests-bucket-content-home -w /home/node/app gio-devops/consolidator:0.0.1 bash
 
 
 
