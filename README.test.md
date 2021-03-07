@@ -1,14 +1,47 @@
 # How to test the dockerized version
 
 ```bash
+export WHERE_I_WORK=~/iwarehouse
+export THIS_RECIPE_VERSION="feature/minimization"
+mkdir -p ${vWHERE_I_WORK}
+git clone git@github.com:gravitee-lab/consolidator.git ${vWHERE_I_WORK}
+cd ${vWHERE_I_WORK}
+git checkout ${THIS_RECIPE_VERSION}
+
+
+# -- #
+# -- # First set up test data
+# -- #
+
+# The absolute path to the folder where the Python Script put all the built zip files.
+export PREPS_HOME=$(pwd)/tmp
+#  the Gravitee release version
+export GIO_RELEASE_VERSION="1.25.27"
+# The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
+export BUCKET_CONTENT_HOME=$(pwd)/tests-bucket-content-home
+
+./setup-test-data.sh
+
+# -- #
+# -- # Then build the container
+# -- #
+
 
 # docker run -u root -itd --name gio_pr_spawner -w /home/node/app gio-devops/consolidator:0.0.1 sh
 # docker run -u root -itd --name gio_consolidator -w /home/node/app gio-devops/consolidator:0.0.1
-docker run -u root -itd --name gio_consolidator -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1
+# docker run -u root -itd --name gio_consolidator -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1
+docker run -u root -itd --name gio_consolidator -e GIO_RELEASE_VERSION="$GIO_RELEASE_VERSION" -v $PWD:/home/node/app -w /home/node/app gio-devops/consolidator:0.0.1 bash
 
-export RETRIEVED_BCH=$(mktemp -d -t "whatever-XXXXXXXXXX")
 
-docker cp gio_consolidator:/home/node/app/bch ${RETRIEVED_BCH}
+
+# -- #
+# -- # Finally execute the consolidator
+# -- #
+
+docker exec -it gio_consolidator bash -c "pwd && ls -allh ."
+docker exec -it gio_consolidator bash -c "tsc && npm start"
+
+
 
 echo "# ------------------------------------------------------------ #"
 echo "Contenu de [BUCKET_CONTENT_HOME] Avant recup : "

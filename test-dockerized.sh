@@ -342,11 +342,11 @@ echo "Now you need to retrieve BUCKET_CONTENT_HOME=[\${BUCKET_CONTENT_HOME}] on 
 EOF
 
 # The absolute path to the folder where the Python Script put all the built zip files.
-export PREPS_HOME=${PREPS_HOME:-$(pwd)/tmp}
+# export PREPS_HOME=${PREPS_HOME:-$(pwd)/tmp}
 #  the Gravitee release version
-export GIO_RELEASE_VERSION=${GIO_RELEASE_VERSION:-"1.25.27"}
+# export GIO_RELEASE_VERSION=${GIO_RELEASE_VERSION:-"1.25.27"}
 # The absolute path to the folder where to prepare the folder / files tree structure to sync to the S3 Bucket
-export BUCKET_CONTENT_HOME=${BUCKET_CONTENT_HOME:-$(pwd)/tests-bucket-content-home}
+# export BUCKET_CONTENT_HOME=${BUCKET_CONTENT_HOME:-$(pwd)/tests-bucket-content-home}
 
 # mkdir ${DOCKER_BUILD_CONTEXT}/python-tmp/
 
