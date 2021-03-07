@@ -246,14 +246,15 @@ export class Consolidator implements Preparator{
           */
 
           let destinationFolder: string =\`graviteeio-apim/plugins/\${gioBundlesTypes}/\${zipFilenameNoextNover}\`
+          console.log(\`destinationFolder=[\${destinationFolder}]\`)
           // mkdir -p \${BUCKET_CONTENT_HOME}/bucket-content/\${DESTINATION_FOLDER}
           let createDestinationFolder = shelljs.exec(\`mkdir -p \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}\`);
           if (createDestinationFolder.code !== 0) {
             throw new Error(\`{[Consolidator]} - [processByFilters(): void] - An error occured while executing [mkdir -p \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}]\`)
           }
           console.log(\`\`);
-          console.log(\`Now copying the file into the destination tree : \`);
-          console.log(\` - destinationFolder=[\${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}] : \`);
+          console.log(\`Now copying the file into the destination folder [\${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}] : \`);
+          // console.log(\` - destinationFolder=[\${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}] : \`);
           // console.log(\` - destinationFolder=[\${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}] : \`);
           console.log(\`\`);
           let copyZipFile = shelljs.exec(\`cp -f \${zipFilePath} \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}/\`); // cp -f \${ZIP_FILE_PATH} \${BUCKET_CONTENT_HOME}/bucket-content/\${DESTINATION_FOLDER}/
@@ -269,6 +270,7 @@ export class Consolidator implements Preparator{
             throw new Error(\`{[Consolidator]} - [processByFilters(): void] - An error occured while executing [cp -f \${zipFilePath} \${process.env.BUCKET_CONTENT_HOME}/bucket-content/\${destinationFolder}/]\`)
           }
           console.log(\`\`);
+          throw new Error("DEBUG STOP POINT JBL");
         });
         console.log(\`finished processing [\${filterFilePath}]\`);
         console.log(\`\`);
